@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { GlobalContext } from '../context/GlobalContext';
 
 const HomePage = () => {
-  useEffect(() => {}, []);
+  const {users, getUsers} = useContext(GlobalContext)
+
+
+  useEffect(() => {
+    getUsers()
+  }, []);
 
   return (
     <div id='home'>
@@ -15,7 +21,13 @@ const HomePage = () => {
       </div>
       <div className='row text-center'>
         <div className='col-6 offset-3'>
-          <ul className='list-group'>{/* Render Users in App */}</ul>
+          <ul className='list-group'>
+            {users.map(user => {
+              return (
+                <li className='list-group-item'>{user.firstName}</li>
+              )
+            })
+          }</ul>
         </div>
       </div>
     </div>
