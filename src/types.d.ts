@@ -28,4 +28,5 @@ type AuthStateType = {
     error: string;
     userLogin: (creds:Creds) => void;
     userRegister: (register: User) => void;
+  
 }
