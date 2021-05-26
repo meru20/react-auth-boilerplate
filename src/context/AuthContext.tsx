@@ -7,6 +7,7 @@ const initialState = {
   error: '',
   userLogin: () => {},
   userRegister: () => {},
+  userLogOut : () => {},
 };
 
 const authReducer = (state: any, action: any) => {
@@ -19,6 +20,7 @@ const authReducer = (state: any, action: any) => {
       return {...state, alert:action.payload,loading: false, error:''};
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
+    
     case 'ERROR':
       return { ...state, error: action.payload, loading: false };
    
@@ -53,6 +55,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       dispatch({type:'ALERT', payload:'You have successfully been registered, you can login to get started!'})
 
     }
+    
     catch (err){
       console.log(err);
       console.log('error',err.response.data.message)
@@ -60,6 +63,17 @@ export const AuthProvider: React.FC = ({ children }) => {
       dispatch({ type: 'ERROR', payload:err });
     }
   }
+
+  // const userLogOut = async() => {
+  //   try {
+  //     await localStorage.removeItem('user');
+  //     dispatch({ type: 'LOGOUT' });
+
+  //   }
+  //   catch (e){
+  //     console.log(e)
+  //   }
+  // }
 
   // Function for userRegistration
 
@@ -71,6 +85,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         loading: state.loading,
         userLogin,
         userRegister,
+        
       }}>
       {children}
     </AuthContext.Provider>
