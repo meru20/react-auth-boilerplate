@@ -6,12 +6,15 @@ const initialState = {
   user: undefined,
   alert: false,
   saveUser: () => {},
+  getUsers: () => {},
 };
 
 const appReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'SAVE_USER':
       return { ...state, alert: false };
+    case 'GET_USERS':
+      return {...state, users: action.payload}  
     case 'ALERT':
       return { ...state, alert: true };
     default:
@@ -34,6 +37,15 @@ export const GlobalProvider: React.FC = ({ children }) => {
       console.log(e);
     }
   };
+  const getUsers = async () => {
+    try {
+        let {data} = await instance.get('/user');
+        // console.log('data ', response)
+        dispatch({ type: 'GET_USERS', payload: data });
+      } catch (e) {
+        console.log(e);
+      }
+}
 
   return (
     <GlobalContext.Provider
@@ -42,6 +54,7 @@ export const GlobalProvider: React.FC = ({ children }) => {
         alert: state.alert,
         users: state.users,
         saveUser,
+        getUsers,
       }}>
       {children}
     </GlobalContext.Provider>
