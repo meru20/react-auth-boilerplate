@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: '',
   userLogin: () => {},
+  userRegister: () => {},
 };
 
 const authReducer = (state: any, action: any) => {
@@ -14,10 +15,13 @@ const authReducer = (state: any, action: any) => {
       return { ...state, alert: action.payload };
     case 'LOGIN':
       return { ...state, loading: false, error: '' };
+    case 'REGISTER': 
+      return {...state, alert:action.payload,loading: false, error:''};
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
     case 'ERROR':
       return { ...state, error: action.payload, loading: false };
+   
     default:
       return state;
   }
@@ -41,6 +45,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
+  const userRegister = async (register: User) => {
+    try {
+      let {data} = await instance.post('/auth/register', register);
+      console.log('register', data)
+      dispatch({ type: 'REGISTER' })
+      dispatch({type:'ALERT', payload:'You have successfully been registered, you can login to get started!'})
+
+    }
+    catch (err){
+      console.log(err);
+      console.log('error',err.response.data.message)
+      // let {message} = await instance.post('/auth/register')
+      dispatch({ type: 'ERROR', payload:err });
+    }
+  }
+
   // Function for userRegistration
 
   return (
@@ -50,6 +70,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         alert: state.alert,
         loading: state.loading,
         userLogin,
+        userRegister,
       }}>
       {children}
     </AuthContext.Provider>
