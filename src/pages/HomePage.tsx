@@ -24,7 +24,7 @@ const HomePage = () => {
           <ul className='list-group'>
             {users.map(user => {
               return (
-                <li className='list-group-item'>{user.firstName}</li>
+                <li className='list-group-item'>{user.firstName} {' '} {user.lastName}</li>
               )
             })
           }</ul>

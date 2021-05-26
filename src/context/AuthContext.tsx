@@ -58,9 +58,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     
     catch (err){
       console.log(err);
+      let message = err.response.data.message;
       console.log('error',err.response.data.message)
-      // let {message} = await instance.post('/auth/register')
-      dispatch({ type: 'ERROR', payload:err });
+     
+      dispatch({ type: 'ERROR', payload:message });
     }
   }
 

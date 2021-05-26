@@ -31,9 +31,17 @@ const RegistrationPage = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     userRegister(register);
-    setShowAlert(true)
-    clearForm();
+    
+    if (error) {
+      setShowAlert(false)
+    }
+    else{
+      setShowAlert(true)
+      clearForm();
+    }
+   
   };
+  
 
   return (
     <div id='home'>
@@ -45,8 +53,8 @@ const RegistrationPage = () => {
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
           {/* <div id='hideAlert'>  */}
-          {showAlert? (
-            <div id='hideMe' className='text-center alert alert-success  mt-3' >{alert}</div>
+          {showAlert ? (
+            <div className='text-center alert alert-success  mt-3' >{alert}</div>
 
           ): null}
           
